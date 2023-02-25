@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <!-- Bootstrap 4.4.1 from CDN -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'restcountries/styles.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <div class="row">
+            <div class="sidebar col-lg-2 col-md-3">
+                <h2>Strativ Assignment</h2>
+                <form action="{% url 'restcountries:search_country' %}" method="GET">
+                    <input class="search" type="text" name="name" placeholder="Search by name">
+                </form>
+
+                {% if user.is_authenticated %}
+                  Hello, {{ user.username }}<br>
+                  <a href="{% url 'users:logout' %}">Log out</a><br>
+                {% else %}
+                <a href="{% url 'users:register' %}">Register</a><br>
+                <a href="{% url 'users:login' %}">Log in</a><br>
+                {% endif %}
+
+                <div>
+                    <a href="{% url 'restcountries:index' %}">Home</a>
+                </div>
+            </div>
+            <div class="main col-lg-10 col-md-9">
+                {% block body %}
+                {% endblock %}
+            </div>
+        </div>
+
+    </body>
+</html>
